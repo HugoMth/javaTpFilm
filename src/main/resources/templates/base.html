@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Home</title>
+</head>
+<body>
+<div class="flex flex-col min-h-screen">
+    <header class="w-full flex justify-center p-8 bg-amber-300 flex justify-between">
+        <a th:href="@{/films}"><h1 class="font-bold text-2xl">La filmothèque - <span sec:authorize="isAuthenticated()"
+                                                                                     th:text="${loggedUser.prenom}"></span>
+        </h1></a>
+        <div>
+            <button class="bg-gray-900 text-white border uppercase font-bold p-2 rounded-xl text-xs hover:bg-white hover:text-gray-900"
+                    sec:authorize="hasRole('ROLE_ADMIN')">
+                <a th:href="@{/film-form}">
+                    Add a movie
+                </a>
+            </button>
+            <button class="bg-gray-900 text-white border uppercase font-bold p-2 rounded-xl text-xs hover:bg-white hover:text-gray-900">
+                <a th:href="@{/logout}" sec:authorize="isAuthenticated()">
+                    logout
+                </a>
+                <a th:href="@{/login}" sec:authorize="!isAuthenticated()">
+                    login
+                </a>
+            </button>
+        </div>
+    </header>
+    <div th:if="${flashMessage}" class="p-2 flex justify-center" th:classappend="${flashMessage.getTypeCssClass()}">
+        <div class="flex" th:classappend="${flashMessage.getTypeCssClass()}">
+            <p th:text="${flashMessage.message}"></p>
+            <a href class="text-xs ml-2">x</a>
+        </div>
+    </div>
+    <div class="flex flex-col bg-gray-100 flex-1 py-10">
+        <div layout:fragment="content">
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

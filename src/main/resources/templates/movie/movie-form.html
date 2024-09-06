@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/base}">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="flex flex-col items-center bg-white w-2/3 m-auto text-gray-900 p-5 rounded">
+        <h1 class="mb-5 font-bold text-xl">Ajouter un film</h1>
+        <form th:object="${movie}" method="post" th:action="@{/film-form}" class="flex flex-col">
+            <input type="hidden" th:field="*{id}"/>
+            <div class="mb-5 w-full">
+                <label for="title" class="block mb-2 text-sm font-medium text-gray-900">Titre</label>
+                <input type="text" id="title"
+                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-300 focus:border-amber-300 block w-full p-2.5 "
+                       placeholder="Titre" th:field="*{title}"/>
+
+            </div>
+
+            <div class="mb-5 w-full">
+                <label for="genre" class="block mb-2 text-sm font-medium text-gray-900">Genre</label>
+                <select th:field="*{genre.id}" id="genre"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-300 focus:border-amber-300 block w-full p-2.5 ">
+                    <option th:each="genre: ${genres}" th:value="${genre.getId()}"
+                            th:text="${genre.getTitre()}"></option>
+                </select>
+            </div>
+            <div class="mb-5 w-full">
+                <label for="participants" class="block mb-2 text-sm font-medium text-gray-900">Participants</label>
+                <select th:field="*{participants}" id="participants" multiple
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-300 focus:border-amber-300 block w-full p-2.5 ">
+                    <option th:each="participant: ${participants}" th:value="${participant.getId()}"
+                            th:text="${participant.getNom() + ' ' + participant.getPrenom()}"></option>
+                </select>
+            </div>
+            <div class="mb-5 w-full ">
+                <label for="year" class="block mb-2 text-sm font-medium text-gray-900">Année</label>
+                <input type="text" id="year"
+                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-300 focus:border-amber-300 block w-full p-2.5 "
+                       placeholder="Titre" th:field="*{year}"/>
+            </div>
+            <div class="mb-5 w-full ">
+                <label for="duration" class="block mb-2 text-sm font-medium text-gray-900">Durée</label>
+                <input type="text" id="duration"
+                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-300 focus:border-amber-300 block w-full p-2.5 "
+                       placeholder="Titre" th:field="*{duration}"/>
+            </div>
+            <div class="mb-5 w-full ">
+                <label for="synopsis" class="block mb-2 text-sm font-medium text-gray-900">Synopsis</label>
+                <textarea th:field="*{synopsis}" id="synopsis"
+                          rows="4"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-300 focus:border-amber-300 block w-full p-2.5"></textarea>
+            </div>
+            <div class="mb-5 flex justify-center">
+                <input type="submit" value="envoyer"
+                       class="bg-amber-300 rounded-xl w-2/4 m-auto h-8 text-base font-bold">
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
